@@ -1,5 +1,6 @@
-import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Ingredient } from '../../shared/ingredient.model';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-shopping-edit',
@@ -7,8 +8,7 @@ import { Ingredient } from '../../shared/ingredient.model';
   styleUrl: './shopping-edit.component.css'
 })
 export class ShoppingEditComponent implements OnInit {
-  @ViewChild('nameInput') nameInputRef: ElementRef;
-  @ViewChild('amountInput') amountInputRef: ElementRef;
+
   @Output() ingredientAdded = new EventEmitter<Ingredient>();
 
   constructor() {}
@@ -16,18 +16,11 @@ export class ShoppingEditComponent implements OnInit {
   ngOnInit() {
 
   }
-  onAddItem() {
-    const ingName = this.nameInputRef.nativeElement.value;
-    const ingAmount = this.amountInputRef.nativeElement.value;
-    const newIngredient = new Ingredient(ingName, ingAmount);
+  onAddItem(form: NgForm) {
+    const value = form.value;
+    const newIngredient = new Ingredient(value.name, value.amount);
     this.ingredientAdded.emit(newIngredient);
   }
-  onDeleteItem() {
-  throw new Error('Method not implemented.');
-  }
 
-}
-function OutPut(): (target: ShoppingEditComponent, propertyKey: "ingredientAdded") => void {
-  throw new Error('Function not implemented.');
 }
 
